@@ -1,12 +1,11 @@
 <template>
-  <div id="app">
+  <div id="app" class="hero-image">
     <div id="nav">
           <v-app-bar
       dense
       dark
       absolute
       color="#fcb69f"
-      src="https://picsum.photos/1920/1080?random"
       scroll-target="#scrolling-techniques-2"
     >
 <v-row justify="center">
@@ -64,20 +63,30 @@
     </v-row>
   </v-footer>
 
-  <v-parallax
-    height="300"
-    src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-  ></v-parallax>
   </div>
 </template>
 
 <style lang="scss">
+
+.hero-image {
+  background-image: url("https://www.canadahelps.org/media/5-Reasons-Why-You-Should-Donate-to-Charity.jpg"); /* The image used */
+  background-color: #eb1212; /* Used if the image is unavailable */
+  height: 1000px; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+  }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: black;
+  font-family:monospace;
+}
+div.b{
+  font-size: xx-large;
 }
 
 #nav {
@@ -85,11 +94,17 @@
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: white;
 
     &.router-link-exact-active {
       color: #42b983;
     }
+
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
   }
 }
 </style>
