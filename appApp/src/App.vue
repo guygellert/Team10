@@ -1,8 +1,26 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+          <v-app-bar
+      color="green"
+      dense
+      dark
+    >
+    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+          <v-toolbar-title>עמותותות</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+      <router-link to="/">דף הבית</router-link> |
+      <router-link to="/about">העמותות</router-link>
+      </v-app-bar>
     </div>
     <router-view/>
   </div>
