@@ -1,5 +1,6 @@
 import pandas as pd
-import numpy
+import numpy as np
+import json
 from scipy.optimize import linear_sum_assignment
 
 MAX_INT = 1000
@@ -10,7 +11,7 @@ Parameters: df- table with columns UNIT, NAME, COUNT, CAPACITY, UNIT_NODES, ORG_
 Returns: matrix representing a graph of all requests, with the edges having weight (MAX_INT - people_sent)
 """
 def init_weights(df):
-    weights = numpy.zeros((df['UNIT'].nunique(), df['NAME'].nunique()))
+    weights = np.zeros((df['UNIT'].nunique(), df['NAME'].nunique()))
     weights.fill(MAX_INT)
 
     for ind in df.index:  # iterates over requests to create weight matrix
@@ -62,7 +63,7 @@ Notes: assumes count < capacity for any given request
 """
 
 
-def Matching_Algorithm(org_req, unit_req):
+def Matching_Algorithm(unit_req, org_req):
     full_df = unit_req.merge(org_req, on='NAME')
     unit_nodes = {full_df['UNIT'].unique()[i]: i for i in
                   range(0, full_df['UNIT'].nunique())}  # matches units to nodes
@@ -71,7 +72,7 @@ def Matching_Algorithm(org_req, unit_req):
 
     full_df['ORG_NODE'] = full_df['NAME'].apply(lambda x: org_nodes[x])
     full_df['UNIT_NODE'] = full_df['UNIT'].apply(lambda x: unit_nodes[x])
-    # print(full_df)
+    print(full_df)
 
     weights = init_weights(full_df)
     # print(weights)
@@ -92,17 +93,52 @@ def Matching_Algorithm(org_req, unit_req):
         dic.pop('UNIT_NODE')
         dic.pop('ORG_NODE')
         dic.pop('CAPACITY')
+        unit, date = dic['NAME'].split('/')[0], dic['NAME'].split('/')[1]
+        dic['NAME'] = unit
+        dic['DATE'] = date
         ret += [dic]
 
     print(ret)
 
 
+def Create_Matches(units, orgs):
+    # units = json.load(units_json)
+    # orgs = json.load(orgs_json)
+
+    COUNTS, UNITS, NAMES, DATES = [], [], [], []
+    for req in units:
+        COUNTS += [req['count']]
+        UNITS += [req['army_unit']]
+        NAMES += [req['name'] + '/' + req['dates']]
+
+    print(NAMES)
+    unit_req = pd.DataFrame(data={'UNIT': UNITS, 'COUNT': COUNTS, 'NAME': NAMES})
+
+    NAMES, CAPACITIES, DATES, KIND = [], [], [], []
+    for req in orgs:
+        for date in req['dates']:
+            NAMES += [req['name'] + '/' + date]
+            CAPACITIES += [req['capacity']]
+            # DATES += date
+            # KIND += req['activity_kind']
+    print(NAMES)
+    org_req = pd.DataFrame(data={'NAME': NAMES, 'CAPACITY': CAPACITIES})
+
+    Matching_Algorithm(unit_req, org_req)
+
 
 
 def test():
-    org_req = pd.DataFrame(data={'NAME': [1, 2, 3, 4, 5, 6], 'CAPACITY': [20, 40, 100, 50, 70, 30]})
-    unit_req = pd.DataFrame(data={'UNIT': [1, 2, 3, 4, 1, 5, 3, 4, 6, 7], 'NAME': [1, 2, 3, 5, 5, 6, 5, 1, 4, 6], 'COUNT': [4, 4, 3, 2, 4, 4, 3, 7, 5, 6]})
-    Matching_Algorithm(org_req, unit_req)
+    # org_req = pd.DataFrame(data={'NAME': ['1', '2', '3', '4', '5', '6'], 'CAPACITY': [20, 40, 100, 50, 70, 30]})
+    # unit_req = pd.DataFrame(data={'UNIT': ['1', '2', '3', '4', '1', '5', '3', '4', '6', '7'], 'NAME': ['1', '2', '3', '5', '5', '6', '5', '1', '4', '6'], 'COUNT': [4, 4, 3, 2, 4, 4, 3, 7, 5, 6], 'DATE': ['4', '5', 'feb', 'adf', 'adsf', 'pop', '7', '9', 'j', '0']})
+    # Matching_Algorithm(unit_req, org_req)
+    unit_json = '[{"army_unit": "mamram", "count": 60, "name": "poop", "dates": "231"}, {"army_unit": "matzov", "count": 40, "name": "pee", "dates": "431"}, {"army_unit": "8200", "count": 20, "name": "poop", "dates": "231"}, {"army_unit": "sayeret", "count": 10, "name": "fart", "dates": "231"}]'
+    org_json = '[{"name": "poop", "dates": ["231"], "capacity": 150}, {"name": "pee", "dates": ["431"], "capacity": 200}, {"name": "fart", "dates": ["231"], "capacity": 300}]'
+
+    unit_json = eval(unit_json)
+    org_json = eval(org_json)
+    print(unit_json)
+    Create_Matches(unit_json, org_json)
 
 
 if __name__ == "__main__":
