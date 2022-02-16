@@ -190,7 +190,8 @@ import Swal from 'sweetalert';
             let x = Math.random() * 100;
             let obj = { "id": x.toString() , "name" : this.name , "location" : this.location, 
             "pepole_num" : this.people_num , "activity_kind" : this.activity_kind ,
-            "phone_num" : this.phone_num , "explaination" : this.explanition }
+            "phone_num" : this.phone_num , "explaination" : this.explanition,
+            "dates" : this.dates }
             axios.post(path,obj )
                 .then(() => {
     Swal("הצלחה!", "העמותה שרשמת נרשמה במערכת!", "success")
