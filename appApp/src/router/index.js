@@ -14,6 +14,11 @@ const routes = [
     path: '/about',
     name: 'About',
     component:associtaionPage 
+  },
+  {
+    path: '/shibuz',
+    name: 'shibuz',
+    component:associtaionPage 
   }
 ]
 
