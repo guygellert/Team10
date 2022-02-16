@@ -9,10 +9,21 @@
       src="https://picsum.photos/1920/1080?random"
       scroll-target="#scrolling-techniques-2"
     >
+<v-row justify="center">
+  <v-col cols=4>
+  <v-tab><router-link to="/shibuz">שיבוצים לשבוע הקרוב</router-link></v-tab>
+  </v-col>
+  <v-col cols=4>
+  <v-tab><router-link to="/about">העמותות</router-link></v-tab>
+  </v-col>
+  <v-col cols=4>
+  <v-tab><router-link to="/">דף הבית</router-link></v-tab>
+  </v-col>
+  
+</v-row>
 
-      <router-link to="/">דף הבית</router-link> |
-      <router-link to="/about">העמותות</router-link>|
-      <router-link to="/shibuz">שיבוצים לשבוע הקרוב</router-link>
+      
+      
       </v-app-bar>
       
       
@@ -44,7 +55,7 @@
         class="primary lighten-2 py-4 text-center white--text"
         cols="12"
       >
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+        <strong>TEAM 10</strong>
       </v-col>
     </v-row>
   </v-footer>
