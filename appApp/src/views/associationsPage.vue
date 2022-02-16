@@ -132,7 +132,7 @@
           <v-btn
             color="primary"
             text
-            @click="submit"
+            @click="getMessage"
           >
             Submit
           </v-btn>
@@ -147,7 +147,11 @@
 
 
 <script>
+import axios from 'axios';
+import Swal from 'sweetalert';
+
   export default {
+    components:{ },
     data: () => ({
       errorMessages: '',
       name: null,
@@ -181,6 +185,32 @@
     },
 
     methods: {
+        getMessage() {
+            const path = 'http://localhost:5000/add';
+            let x = Math.random() * 100;
+            let obj = { "id": x.toString() , "name" : this.name , "location" : this.location, 
+            "pepole_num" : this.people_num , "activity_kind" : this.activity_kind ,
+            "phone_num" : this.phone_num , "explaination" : this.explanition }
+            axios.post(path,obj )
+                .then(() => {
+    Swal("הצלחה!", "העמותה שרשמת נרשמה במערכת!", "success")
+                })
+                .catch((error) => {
+                // eslint-disable-next-line
+                console.log(error);
+                });
+},
+        getMessages() {
+            const path = 'http://localhost:5000/ping';
+            axios.get(path).then((res) => 
+            {
+                this.msg = res.data;
+            })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        });
+    },
       resetForm () {
         this.errorMessages = []
         this.formHasErrors = false
