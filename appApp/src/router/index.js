@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import associtaionPage from '../views/associationsPage'
 import educationKatzin from '../views/EductaionKatzin'
+import ShibutzPage from '../views/ShibutzPage'
 Vue.use(VueRouter)
 
 const routes = [
@@ -18,7 +19,7 @@ const routes = [
   {
     path: '/shibuz',
     name: 'shibuz',
-    component:associtaionPage 
+    component:ShibutzPage 
   }
 ]
 

@@ -2,28 +2,68 @@
   <div id="app">
     <div id="nav">
           <v-app-bar
-      color="green"
       dense
       dark
+      absolute
+      color="#fcb69f"
+      src="https://picsum.photos/1920/1080?random"
+      scroll-target="#scrolling-techniques-2"
     >
-    <v-app-bar-nav-icon></v-app-bar-nav-icon>
-          <v-toolbar-title>עמותותות</v-toolbar-title>
+<v-row justify="center">
+  <v-col cols=4>
+  <v-tab><router-link to="/shibuz">שיבוצים לשבוע הקרוב</router-link></v-tab>
+  </v-col>
+  <v-col cols=4>
+  <v-tab><router-link to="/about">העמותות</router-link></v-tab>
+  </v-col>
+  <v-col cols=4>
+  <v-tab><router-link to="/">דף הבית</router-link></v-tab>
+  </v-col>
+  
+</v-row>
 
-      <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-      <router-link to="/">דף הבית</router-link> |
-      <router-link to="/about">העמותות</router-link>|
-      <router-link to="/shibuz">שיבוצים לשבוע הקרוב</router-link>
+      
+      
       </v-app-bar>
+      
+      
     </div>
-    <router-view/>
+    <v-content>
+      <router-view/>
+    </v-content>
+
+
+  <v-footer
+    color="primary lighten-1"
+    padless
+  >
+    <v-row
+      justify="center"
+      no-gutters
+    >
+      <v-btn
+        v-for="link in links"
+        :key="link"
+        color="white"
+        text
+        rounded
+        class="my-2"
+      >
+        {{ link }}
+      </v-btn>
+      <v-col
+        class="primary lighten-2 py-4 text-center white--text"
+        cols="12"
+      >
+        <strong>TEAM 10</strong>
+      </v-col>
+    </v-row>
+  </v-footer>
+
+  <v-parallax
+    height="300"
+    src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+  ></v-parallax>
   </div>
 </template>
 
