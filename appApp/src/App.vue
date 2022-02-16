@@ -10,15 +10,19 @@
       scroll-target="#scrolling-techniques-2"
     >
 <v-row justify="center">
-  <v-col cols=4>
+  <v-col cols=3>
   <v-tab><router-link to="/shibuz">שיבוצים לשבוע הקרוב</router-link></v-tab>
   </v-col>
-  <v-col cols=4>
+  <v-col cols=3>
   <v-tab><router-link to="/about">העמותות</router-link></v-tab>
   </v-col>
-  <v-col cols=4>
+  <v-col cols=3>
+  <v-tab><router-link to="/EductaionKatzin">הכנסת בקשות היחידות</router-link></v-tab>
+  </v-col>
+  <v-col cols=3>
   <v-tab><router-link to="/">דף הבית</router-link></v-tab>
   </v-col>
+
   
 </v-row>
 

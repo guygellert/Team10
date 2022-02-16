@@ -3,12 +3,24 @@ import VueRouter from 'vue-router'
 import associtaionPage from '../views/associationsPage'
 import educationKatzin from '../views/EductaionKatzin'
 import ShibutzPage from '../views/ShibutzPage'
+import home from '../views/Home'
+import chooseassociations from '../views/ChooseAssociations'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'Home',
+    component: home
+  },
+  {
+    path: '/ChooseAssociations',
+    name: 'ChooseAssociations',
+    component: chooseassociations
+  },
+  {
+    path: '/EductaionKatzin',
+    name: 'EductaionKatzin',
     component: educationKatzin
   },
   {
