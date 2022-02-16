@@ -19,7 +19,8 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <router-link to="/">דף הבית</router-link> |
-      <router-link to="/about">העמותות</router-link>
+      <router-link to="/about">העמותות</router-link>|
+      <router-link to="/shibuz">שיבוצים לשבוע הקרוב</router-link>
       </v-app-bar>
     </div>
     <router-view/>

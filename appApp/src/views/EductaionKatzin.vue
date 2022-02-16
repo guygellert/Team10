@@ -9,7 +9,7 @@
       ></v-date-picker>
     </v-col>
     <v-col
-      cols="6"
+      cols="5"
 
     >
       <v-menu
