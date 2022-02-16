@@ -1,13 +1,203 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-  </div>
+  <v-row justify="center">
+    <v-col
+      cols="4"
+    ></v-col>
+    <v-col
+      cols="4"
+    >
+    <h1> הירשמו אלינו</h1>
+      <v-card ref="form">
+        <v-card-text>
+          <v-text-field
+            ref="name"
+            v-model="name"
+            :rules="[() => !!name || 'This field is required']"
+            :error-messages="errorMessages"
+            label="שם העמותה"
+            required
+          ></v-text-field>
+          <v-text-field
+            ref="location"
+            v-model="location"
+            :rules="[() => !!location|| 'This field is required']"
+            :error-messages="errorMessages"
+            label="מיקום ההתנדבות"
+            required
+          ></v-text-field>
+          <v-text-field
+            ref="people_num"
+            v-model="people_num"
+            :rules="[() => !!people_num || 'This field is required', addressCheck]"
+            label="כמות האנשים"
+            required
+          ></v-text-field>
+          <v-text-field
+            ref="activity_kind"
+            v-model="activity_kind"
+            :rules="[() => !!activity_kind || 'This field is required']"
+            label="סוג הפעילות"
+            required
+          ></v-text-field>
+          <v-text-field
+            ref="phone_num"
+            v-model="phone_num"
+            :rules="[() => !!phone_num || 'This field is required']"
+            label="מספר טלפון ליצירת קשר"
+            required
+          ></v-text-field>
+          <v-text-field
+            ref="explanition"
+            v-model="explanition"
+            :rules="[() => !!explanition || 'This field is required']"
+            :error-messages="errorMessages"
+            label="הסבר קצר על העמותה"
+            required
+          ></v-text-field>
+          <v-date-picker
+            v-model="dates"
+            multiple
+          ></v-date-picker>
+          <v-menu
+            ref="menu"
+            v-model="menu"
+            :close-on-content-click="false"
+            :return-value.sync="dates"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-combobox
+                v-model="dates"
+                multiple
+                chips
+                small-chips
+                label="Multiple picker in menu"
+                prepend-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              ></v-combobox>
+            </template>
+            <v-date-picker
+              v-model="dates"
+              multiple
+              no-title
+              scrollable
+            >
+              <v-spacer></v-spacer>
+              <v-btn
+                text
+                color="primary"
+                @click="menu = false"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                text
+                color="primary"
+                @click="$refs.menu.save(dates)"
+              >
+                OK
+              </v-btn>
+            </v-date-picker>
+          </v-menu>
+        </v-card-text>
+        <v-divider class="mt-12"></v-divider>
+        <v-card-actions>
+          <v-btn text>
+            Cancel
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-slide-x-reverse-transition>
+            <v-tooltip
+              v-if="formHasErrors"
+              left
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  class="my-0"
+                  v-bind="attrs"
+                  @click="resetForm"
+                  v-on="on"
+                >
+                  <v-icon>mdi-refresh</v-icon>
+                </v-btn>
+              </template>
+              <span>Refresh form</span>
+            </v-tooltip>
+          </v-slide-x-reverse-transition>
+          <v-btn
+            color="primary"
+            text
+            @click="submit"
+          >
+            Submit
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-col>
+    <v-col
+      cols="12"
+    ></v-col>
+  </v-row>
 </template>
 
-<script>
-// @ is an alias to /src
 
-export default {
-  name: 'Home',
-}
+<script>
+  export default {
+    data: () => ({
+      errorMessages: '',
+      name: null,
+      location: null,
+      people_num: null,
+      activity_kind: null,
+      phone_num: null,
+      explanition: null,
+      formHasErrors: false,
+      dates: [],
+      menu: false,
+    }),
+
+    computed: {
+      form () {
+        return {
+          name: this.name,
+          location: this.location,
+          people_num: this.people_num,
+          activity_kind: this.activity_kind,
+          phone_num: this.phone_num,
+          explanition: this.explanition,
+        }
+      },
+    },
+
+    watch: {
+      name () {
+        this.errorMessages = ''
+      },
+    },
+
+    methods: {
+      resetForm () {
+        this.errorMessages = []
+        this.formHasErrors = false
+
+        Object.keys(this.form).forEach(f => {
+          this.$refs[f].reset()
+        })
+      },
+      submit () {
+        this.formHasErrors = false
+
+        Object.keys(this.form).forEach(f => {
+          if (!this.form[f]) this.formHasErrors = true
+
+          this.$refs[f].validate(true)
+        })
+      },
+    },
+  }
 </script>
