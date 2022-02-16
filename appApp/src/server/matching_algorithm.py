@@ -101,9 +101,9 @@ def Matching_Algorithm(unit_req, org_req):
     print(ret)
 
 
-def Create_Matches(units, orgs):
-    # units = json.load(units_json)
-    # orgs = json.load(orgs_json)
+def Create_Matches(units_json, orgs_json):
+    units = json.load(units_json)
+    orgs = json.load(orgs_json)
 
     COUNTS, UNITS, NAMES, DATES = [], [], [], []
     for req in units:
