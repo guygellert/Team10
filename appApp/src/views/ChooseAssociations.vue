@@ -1,8 +1,11 @@
 <template>
   <v-row justify="center" >
     <v-col 
-      cols="4"
+      cols="1"
      ></v-col>
+         <v-col 
+      cols="10">
+      <v-row>
   <v-card v-for="item in listOfVolunteer" :key="item.id"
     class="mx-auto"
     max-width="344"
@@ -10,6 +13,13 @@
   >
     <v-list-item three-line>
       <v-list-item-content>
+                <v-row justify="center">
+                  <v-col></v-col>
+                  <v-col>
+          <v-img :src="item.url_img" width="150" height="150"></v-img>
+          </v-col>
+          <v-col></v-col>
+        </v-row>
         <div class="text-overline mb-4">
           {{ item.name }} - {{ item.date }}
         </div>
@@ -39,7 +49,8 @@
       </v-checkbox>
     </v-card-actions>
   </v-card>
-
+  </v-row>
+         </v-col>
   <v-btn @click="SaveRequest">Submit</v-btn>
   </v-row>
 </template>

@@ -9,27 +9,29 @@
     <h1> הירשמו אלינו</h1>
       <v-card ref="form">
         <v-card-text>
+            <v-form v-model="valid">
           <v-text-field
             ref="name"
             v-model="name"
-            :rules="[() => !!name || 'This field is required']"
+            
             :error-messages="errorMessages"
-            label="שם העמותה"
+            label="*שם העמותה"
             required
+            :rules="nameRules"
           ></v-text-field>
           <v-text-field
             ref="location"
             v-model="location"
             :rules="[() => !!location|| 'This field is required']"
             :error-messages="errorMessages"
-            label="מיקום ההתנדבות"
+            label="*מיקום ההתנדבות"
             required
           ></v-text-field>
           <v-text-field
             ref="people_num"
             v-model="people_num"
             :rules="[() => !!people_num || 'This field is required', addressCheck]"
-            label="כמות האנשים"
+            label="כמות מתנדבים דרושה"
             required
           ></v-text-field>
           <v-text-field
@@ -43,7 +45,7 @@
             ref="phone_num"
             v-model="phone_num"
             :rules="[() => !!phone_num || 'This field is required']"
-            label="מספר טלפון ליצירת קשר"
+            label="מספר טלפון ליצירת קשר*"
             required
           ></v-text-field>
           <v-text-field
@@ -52,6 +54,13 @@
             :rules="[() => !!explanition || 'This field is required']"
             :error-messages="errorMessages"
             label="הסבר קצר על העמותה"
+            required
+          ></v-text-field>
+            <v-text-field
+            ref="url"
+            v-model="url"
+            :error-messages="errorMessages"
+            label="נתיב לתמונה ברשת"
             required
           ></v-text-field>
           <v-date-picker
@@ -103,6 +112,7 @@
               </v-btn>
             </v-date-picker>
           </v-menu>
+          </v-form>
         </v-card-text>
         <v-divider class="mt-12"></v-divider>
         <v-card-actions>
@@ -156,8 +166,11 @@ import Swal from 'sweetalert';
       errorMessages: '',
       name: null,
       location: null,
+      nameRules: [ v => !!v || 'Name is required'],
       people_num: null,
       activity_kind: null,
+      url:null,
+      valid:true,
       phone_num: null,
       explanition: null,
       formHasErrors: false,
@@ -172,6 +185,7 @@ import Swal from 'sweetalert';
           location: this.location,
           people_num: this.people_num,
           activity_kind: this.activity_kind,
+          url: this.url,
           phone_num: this.phone_num,
           explanition: this.explanition,
         }
@@ -186,6 +200,11 @@ import Swal from 'sweetalert';
 
     methods: {
         getMessage() {
+            if( this.valid == false){
+                Swal("נכשל!", "יש להזין את שדות החובה במערכת!", "error")
+                return
+                
+            }
             const path = 'http://localhost:5000/add';
             let x = Math.random() * 100;
             let dateFormat = []
@@ -195,10 +214,12 @@ import Swal from 'sweetalert';
             let obj = { "id": x.toString() , "name" : this.name , "location" : this.location, 
             "pepole_num" : this.people_num , "activity_kind" : this.activity_kind ,
             "phone_num" : this.phone_num , "explaination" : this.explanition,
-            "dates" : dateFormat }
+            "dates" : dateFormat, "url_img": this.url }
             axios.post(path,obj )
                 .then(() => {
-    Swal("הצלחה!", "העמותה שרשמת נרשמה במערכת!", "success")
+    Swal("הצלחה!", "העמותה שרשמת נרשמה במערכת!", "success").then(() =>{
+        this.$router.push('/')
+    })
                 })
                 .catch((error) => {
                 // eslint-disable-next-line

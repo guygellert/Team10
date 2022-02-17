@@ -9,6 +9,7 @@
     <h1>רישום היחידות שרוצות להתנדב</h1>
       <v-card ref="form">
         <v-card-text>
+            <v-form v-model="valid">
           <v-text-field
             ref="unit"
             v-model="unit"
@@ -79,6 +80,7 @@
               </v-btn>
             </v-date-picker>
           </v-menu>
+            </v-form>
         </v-card-text>
         <v-divider class="mt-12"></v-divider>
         <v-card-actions>
@@ -123,6 +125,7 @@
 
 
 <script>
+import Swal from 'sweetalert';
   export default {
     data: () => ({
       errorMessages: '',
@@ -146,6 +149,7 @@
           activity_kind: this.activity_kind,
           phone_num: this.phone_num,
           explanition: this.explanition,
+          valid:true
         }
       },
     },
@@ -153,6 +157,7 @@
     watch: {
       name () {
         this.errorMessages = ''
+        
       },
     },
 
@@ -166,6 +171,10 @@
         })
       },
       submit () {
+          if(this.valid == false){
+              Swal("נכשל!", "יש להזין את שדות החובה במערכת!", "error")
+              return
+          }
            this.$store.state.datesPick = []
         this.formHasErrors = false
         this.$store.commit("changeUnit",this.unit)

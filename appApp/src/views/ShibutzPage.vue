@@ -6,7 +6,7 @@
     :items-per-page="5"
     class="elevation-1"
   ></v-data-table>
-<v-btn @click="submitMe()">Submit</v-btn>
+<v-btn @click="submitMe()">שיבוץ חכם</v-btn>
 </v-card>
 </template>
 <script>
