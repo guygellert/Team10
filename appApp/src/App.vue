@@ -80,7 +80,7 @@
 .hero-image {
   background-image: url("https://www.canadahelps.org/media/5-Reasons-Why-You-Should-Donate-to-Charity.jpg"); /* The image used */
   background-color: #eb1212; /* Used if the image is unavailable */
-  height: 1000px; /* You must set a specified height */
+  height: 1200px; /* You must set a specified height */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
