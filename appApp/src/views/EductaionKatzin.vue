@@ -166,7 +166,14 @@
         })
       },
       submit () {
+           this.$store.state.datesPick = []
         this.formHasErrors = false
+        this.$store.commit("changeUnit",this.unit)
+        this.$store.state.capacity = this.people_num
+                    this.dates.forEach((dat)=>{
+                this.$store.state.datesPick.push(new Date(dat).toLocaleDateString());
+            })
+        // this.$store.state.datesPick = this.dates
         this.$router.push('/ChooseAssociations')
         Object.keys(this.form).forEach(f => {
           if (!this.form[f]) this.formHasErrors = true

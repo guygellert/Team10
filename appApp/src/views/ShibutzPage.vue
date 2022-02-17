@@ -1,16 +1,19 @@
 <template>
+<v-card>
   <v-data-table
     :headers="headers"
     :items="shibuzim"
     :items-per-page="5"
     class="elevation-1"
   ></v-data-table>
+<v-btn @click="submitMe()">Submit</v-btn>
+</v-card>
 </template>
-
-
-
 <script>
+import axios from 'axios';
   export default {
+      
+
     data () {
       return {
         headers: [
@@ -18,11 +21,11 @@
             text: 'כמות אנשים',
             align: 'start',
             sortable: false,
-            value: 'count',
+            value: 'COUNT',
           },
-          { text: 'יחידה ששובצה', value: 'army_unit' },
-          { text: 'תאריך', value: 'date' },
-          { text: 'עמותה', value: 'name' },
+          { text: 'יחידה ששובצה', value: 'UNIT' },
+          { text: 'תאריך', value: 'DATE' },
+          { text: 'עמותה', value: 'NAME' },
         ],
         shibuzim: [
           {
@@ -58,5 +61,21 @@
         ],
       }
     },
+            methods:{
+            submitMe(){
+                                  const path = 'http://localhost:5000/getZivuog';
+                  
+            axios.get(path)
+                .then((value) => {
+                  console.log(value.data)
+                  this.shibuzim = value.data
+    // Swal("הצלחה!", "העמותה שרשמת נרשמה במערכת!", "success")
+                })
+                .catch((error) => {
+                // eslint-disable-next-line
+                console.log(error);
+                });
+            }
+        }
   }
 </script>

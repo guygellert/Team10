@@ -188,10 +188,14 @@ import Swal from 'sweetalert';
         getMessage() {
             const path = 'http://localhost:5000/add';
             let x = Math.random() * 100;
+            let dateFormat = []
+            this.dates.forEach((dat)=>{
+                dateFormat.push(new Date(dat).toLocaleDateString());
+            })
             let obj = { "id": x.toString() , "name" : this.name , "location" : this.location, 
             "pepole_num" : this.people_num , "activity_kind" : this.activity_kind ,
             "phone_num" : this.phone_num , "explaination" : this.explanition,
-            "dates" : this.dates }
+            "dates" : dateFormat }
             axios.post(path,obj )
                 .then(() => {
     Swal("הצלחה!", "העמותה שרשמת נרשמה במערכת!", "success")

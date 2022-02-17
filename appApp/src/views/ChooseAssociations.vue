@@ -11,12 +11,12 @@
     <v-list-item three-line>
       <v-list-item-content>
         <div class="text-overline mb-4">
-          {{ item.name }}
+          {{ item.name }} - {{ item.date }}
         </div>
         <v-list-item-title class="text-h5 mb-1">
           {{ item.explaination}}
         </v-list-item-title>
-        <v-list-item-subtitle>{{ item.date }} </v-list-item-subtitle>
+        <v-list-item-subtitle> {{ item.location }} </v-list-item-subtitle>
       </v-list-item-content>
 
       <v-list-item-avatar
@@ -27,16 +27,16 @@
     </v-list-item>
 
     <v-card-actions>
-      <v-btn
+      <v-checkbox
       @click="addToList(item)"
-        outlined
-        rounded
-        text
-        center
+      class="ma-2"
+      
+      label="אני רוצה להתנדב לכאן!!"
+      color="green"
       >
-      <v-icon> mdi-checkbox-marked-circle</v-icon>
-        Button
-      </v-btn>
+      <!-- <v-icon> mdi-checkbox-marked-circle</v-icon> -->
+        בא לי כאן!!
+      </v-checkbox>
     </v-card-actions>
   </v-card>
 
@@ -46,7 +46,7 @@
 
 <script>
 import axios from 'axios';
-// import Swal from 'sweetalert';
+import Swal from 'sweetalert';
   export default {
     data(){
       return{
@@ -64,13 +64,16 @@ import axios from 'axios';
               newListWithId.push({
                 "id" : x.toString(),
                 name : req.name,
-                date: new Date().toLocaleDateString(),
-                army_unit: 'mamram'
+                count : this.$store.state.capacity,
+                date: req.date,
+                army_unit: this.$store.state.unit
               })
             })
                             axios.post(path,newListWithId )
                 .then(() => {
-    // Swal("הצלחה!", "העמותה שרשמת נרשמה במערכת!", "success")
+    Swal("הצלחה!", "בקשה נשלחה לעמותה!", "success").then(()=>{
+      this.$router.push('/')
+    })
                 })
                 .catch((error) => {
                 // eslint-disable-next-line
@@ -85,12 +88,29 @@ import axios from 'axios';
     {
                   const path = 'http://localhost:5000/getAssociations';
                   
-                  let dates = ["17.02.2022", "31.12.2022"]
+                  let dates = this.$store.state.datesPick
             let obj = { "dates": JSON.stringify(dates) }
             axios.get(path,  {params: obj })
                 .then((value) => {
                   console.log(value.data)
-                  this.listOfVolunteer = value.data
+                  let listOfAmotot = value.data;
+                  let amotoDates =[]
+                  listOfAmotot.forEach(amota =>{
+                    amota.dates.forEach((dat)=>{
+                      amotoDates.push({"date": dat,
+                                                ...amota})
+                    })
+                  })
+
+                  this.$store.state.datesPick.forEach((d) =>{
+                    amotoDates.forEach((datesAmo) =>{
+                      if(datesAmo.date == d){
+                        this.listOfVolunteer.push(datesAmo)
+                      }
+                    })
+                  })
+                  
+                  // this.listOfVolunteer = value.data
     // Swal("הצלחה!", "העמותה שרשמת נרשמה במערכת!", "success")
                 })
                 .catch((error) => {

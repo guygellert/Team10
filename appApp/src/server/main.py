@@ -34,23 +34,24 @@ def getAssociations():
     # return dates
     try:
         # Check if ID was passed to URL query
-        if dates:
+        if dates and len(dates) > 0:
             # docs = request_ref.stream().
             # for doc in docs :
             #     amotot.append(doc)
             records = [];
             for dat in dates:
-                req =  amotot_ref.where(u'date', 'array_contains', dat).get()
+                req =  amotot_ref.where(u'dates', 'array_contains', dat).get()
                 if req:
                     for re in req:
-                        records.append(re.to_dict())
+                        if re.to_dict() not in records :
+                            records.append(re.to_dict())
 
                 # dail = json.loads(records)
 
-                return jsonify(records), 200
+            return jsonify(records), 200
         else:
             # all_todos = [doc.to_dict() for doc in todo_ref.stream()]
-            return "saas", 200
+            return "saas", 400
     except Exception as e:
         return f"An Error Occured: {e}"
     return "" , 400
@@ -91,8 +92,25 @@ def createRequest():
 
 @app.route('/getZivuog', methods=['GET'])
 def zivug():
-    req = request_ref.where(u"date" , "<=", '24.02.2022').where(u"date" , ">=" '20.02.2022').get()
-    matching_algorithm.Matching_Algorithm()
+    listDat =[]
+    req = request_ref.where(u"date" , "<=", '27.02.2022').where(u"date" , ">=" ,'17.02.2022').get()
+    amotot= amotot_ref.get();
+    valid = []
+    for amo in amotot:
+        amos = amo.to_dict()['dates']
+        objAmo = amo.to_dict()
+        for dat in amos:
+            if dat <= '27.2.2022' and dat >= '17.2.2022':
+                listDat =[];
+                listDat.append(dat)
+                valid.append({"name":objAmo['name'],"pepole_num":objAmo['pepole_num'],"dates":listDat})
+
+    s = []
+    for re in req:
+        s.append(re.to_dict())
+    result = matching_algorithm.Create_Matches(s,valid)
+    print(result)
+    return jsonify(result),200
 
 
 

@@ -99,12 +99,6 @@ div.b{
     &.router-link-exact-active {
       color: #42b983;
     }
-
-    text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
   }
 }
 </style>
