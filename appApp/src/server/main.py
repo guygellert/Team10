@@ -26,6 +26,15 @@ db = firestore.client()
 amotot_ref = db.collection('amotot')
 request_ref = db.collection('requests')
 
+@app.route('/allAssociations', methods=['GET'])
+def allAssociations():
+    associations = amotot_ref.get()
+    assArr = []
+    for aso in associations:
+        assArr.append(aso.to_dict())
+    return jsonify(assArr),200
+
+
 @app.route('/getAssociations', methods=['GET'])
 def getAssociations():
     # dates = request.json["dates"]

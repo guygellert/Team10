@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import associtaionPage from '../views/associationsPage'
 import educationKatzin from '../views/EductaionKatzin'
 import ShibutzPage from '../views/ShibutzPage'
+import pageAssoc from '../views/pageAssociations'
 import home from '../views/Home'
 import chooseassociations from '../views/ChooseAssociations'
 Vue.use(VueRouter)
@@ -12,6 +13,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: home
+  },
+  {
+    path: '/Associations',
+    name: 'Associations',
+    component: pageAssoc
   },
   {
     path: '/ChooseAssociations',

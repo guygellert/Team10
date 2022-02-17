@@ -8,21 +8,29 @@
       color="#fcb69f"
       scroll-target="#scrolling-techniques-2"
     >
+    
 <v-row justify="center">
-  <v-col cols=3>
+  <v-col cols=2>
   <v-tab><router-link to="/shibuz">שיבוצים לשבוע הקרוב</router-link></v-tab>
   </v-col>
-  <v-col cols=3>
-  <v-tab><router-link to="/about">העמותות</router-link></v-tab>
+  <v-col cols=2>
+  <v-tab><router-link to="/about">עמותות להרשמה</router-link></v-tab>
   </v-col>
-  <v-col cols=3>
+  <v-col cols=2>
   <v-tab><router-link to="/EductaionKatzin">הכנסת בקשות היחידות</router-link></v-tab>
   </v-col>
-  <v-col cols=3>
+    <v-col cols=2>
+  <v-tab><router-link to="/Associations">עמותות לצפייה</router-link></v-tab>
+  </v-col>
+  <v-col cols=2>
   <v-tab><router-link to="/">דף הבית</router-link></v-tab>
   </v-col>
-
-  
+   <v-col cols=2>
+     <h2>
+       <v-icon>mdi-trophy</v-icon>
+{{ $store.state.score }} :נקודות
+     </h2>
+    </v-col>
 </v-row>
 
       
@@ -67,6 +75,7 @@
 </template>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Alef&family=Assistant&display=swap');
 
 .hero-image {
   background-image: url("https://www.canadahelps.org/media/5-Reasons-Why-You-Should-Donate-to-Charity.jpg"); /* The image used */
@@ -78,12 +87,14 @@
   }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  // font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: black;
-  font-family:monospace;
+  // font-family: 'Alef', sans-serif;
+  font-family: 'Alef', sans-serif;
+font-family: 'Assistant', sans-serif;
 }
 div.b{
   font-size: xx-large;

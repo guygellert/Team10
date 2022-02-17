@@ -8,7 +8,8 @@ export default new Vuex.Store({
       unit:"",
       capacity:0,
       interests:[{"text":'רפואי',"value":'רפואי'},{"text":'בעלי חיים',"value":'בעלי חיים'}],
-      datesPick:[]
+      datesPick:[],
+      score:80
   },
   mutations: {
       changeUnit(state,name){

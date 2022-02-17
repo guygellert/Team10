@@ -5,6 +5,7 @@
     :items="shibuzim"
     :items-per-page="5"
     class="elevation-1"
+    :loading="loading"
   ></v-data-table>
 <v-btn @click="submitMe()">שיבוץ חכם</v-btn>
 </v-card>
@@ -16,6 +17,7 @@ import axios from 'axios';
 
     data () {
       return {
+        loading:false,
         headers: [
           {
             text: 'כמות אנשים',
@@ -27,53 +29,57 @@ import axios from 'axios';
           { text: 'תאריך', value: 'DATE' },
           { text: 'עמותה', value: 'NAME' },
         ],
-        shibuzim: [
-          {
-            name: 'Help Edan Davidai',
-            date: '35/5/2022',
-            army_unit: 'matkal',
-            count: '73'
-          },
-          {
-            name: 'Help Edan Davidai',
-            date: '35/5/2022',
-            army_unit: 'matkal',
-            count: '73'
-          },
-          {
-            name: 'Help Edan Davidai',
-            date: '35/5/2022',
-            army_unit: 'matkal',
-            count: '73'
-          },
-          {
-            name: 'Help Edan Davidai',
-            date: '35/5/2022',
-            army_unit: 'matkal',
-            count: '73'
-          },
-          {
-            name: 'Help Edan Davidai',
-            date: '35/5/2022',
-            army_unit: 'matkal',
-            count: '73'
-          },
-        ],
+        shibuzim:[],
+        // shibuzim: [
+        //   {
+        //     name: 'Help Edan Davidai',
+        //     date: '35/5/2022',
+        //     army_unit: 'matkal',
+        //     count: '73'
+        //   },
+        //   {
+        //     name: 'Help Edan Davidai',
+        //     date: '35/5/2022',
+        //     army_unit: 'matkal',
+        //     count: '73'
+        //   },
+        //   {
+        //     name: 'Help Edan Davidai',
+        //     date: '35/5/2022',
+        //     army_unit: 'matkal',
+        //     count: '73'
+        //   },
+        //   {
+        //     name: 'Help Edan Davidai',
+        //     date: '35/5/2022',
+        //     army_unit: 'matkal',
+        //     count: '73'
+        //   },
+        //   {
+        //     name: 'Help Edan Davidai',
+        //     date: '35/5/2022',
+        //     army_unit: 'matkal',
+        //     count: '73'
+        //   },
+        // ],
       }
     },
             methods:{
             submitMe(){
+                this.loading = true;
                                   const path = 'http://localhost:5000/getZivuog';
                   
             axios.get(path)
                 .then((value) => {
                   console.log(value.data)
                   this.shibuzim = value.data
+                  this.loading = false;
     // Swal("הצלחה!", "העמותה שרשמת נרשמה במערכת!", "success")
                 })
                 .catch((error) => {
                 // eslint-disable-next-line
                 console.log(error);
+                this.loading = false;
                 });
             }
         }

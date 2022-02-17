@@ -79,6 +79,7 @@ import Swal from 'sweetalert';
                 date: req.date,
                 army_unit: this.$store.state.unit
               })
+              this.$store.state.score = this.$store.state.score + 10
             })
                             axios.post(path,newListWithId )
                 .then(() => {
